@@ -1,0 +1,8 @@
+
+
+perl Build.PL
+./Build
+./Build test
+./Build install
+
+perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2"

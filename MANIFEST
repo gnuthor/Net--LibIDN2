@@ -1,0 +1,6 @@
+MANIFEST
+README
+Build.PL
+lib/Net/LibIDN2.xs
+lib/Net/LibIDN2.pm
+t/001_basic.t
