@@ -1,8 +1,17 @@
 
-
 perl Build.PL
 ./Build
 ./Build test
 ./Build install
 
+If your local version of GNU Libidn2 is installed in a non-standard
+location, try the following instead of "perl Build.PL":
+
 perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2"
+
+Should your runtime library search path not contain libidn2, you probably will
+have to set LD_LIBRARY_PATH or compile the absolute library path into
+the module like follows:
+
+perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2 -Wl,-rpath=/path/lib"
+
