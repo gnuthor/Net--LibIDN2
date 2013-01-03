@@ -3,9 +3,14 @@
 use strict;
 use warnings;
 
-use Test::More tests => 25;
+use Test::More tests => 29;
 
 BEGIN { use_ok( 'Net::LibIDN2'); }
+
+ok(length(IDN2_VERSION)>0);
+ok(IDN2_VERSION_NUMBER>0);
+ok(IDN2_LABEL_MAX_LENGTH>32);
+ok(IDN2_DOMAIN_MAX_LENGTH>32);
 
 is(IDN2_NFC_INPUT, 1);
 is(IDN2_ALABEL_ROUNDTRIP, 2);

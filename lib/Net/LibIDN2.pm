@@ -18,6 +18,10 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	idn2_lookup_ul
 	idn2_register_u8
 	idn2_register_ul
+    IDN2_VERSION
+    IDN2_VERSION_NUMBER
+    IDN2_LABEL_MAX_LENGTH
+    IDN2_DOMAIN_MAX_LENGTH
 	IDN2_NFC_INPUT
 	IDN2_ALABEL_ROUNDTRIP
 ) ] );
@@ -25,6 +29,10 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw(
+    IDN2_VERSION
+    IDN2_VERSION_NUMBER
+    IDN2_LABEL_MAX_LENGTH
+    IDN2_DOMAIN_MAX_LENGTH
 	IDN2_NFC_INPUT
 	IDN2_ALABEL_ROUNDTRIP
 );
@@ -96,6 +104,36 @@ Convert internal libidn2 error code I<$rc> to a humanly readable string.
 
 Convert internal libidn2 error code I<$rc> to a string corresponding to
 internal header file symbols names like IDN2_MALLOC.
+
+=back
+
+=head2 Constants
+
+=over 4
+
+=item B<IDN2_VERSION>
+
+Pre-processor symbol with a string that describe the header file version
+number. Used together with idn2_check_version() to verify header file
+and run-time library consistency.
+
+=item B<IDN2_VERSION_NUMBER>
+
+Pre-processor symbol with a hexadecimal value describing the header file
+version number. For example, when the header version is 1.2.4711 this
+symbol will have the value 0x01021267. The last four digits are used to
+enumerate development snapshots, but for all public releases they will
+be 0000.
+
+=item B<IDN2_LABEL_MAX_LENGTH>
+
+Constant specifying the maximum length of a DNS label to 63 characters,
+as specified in RFC 1034.
+
+=item B<IDN2_DOMAIN_MAX_LENGTH>
+
+Constant specifying the maximum length of a DNS domain to 255 characters,
+as specified in RFC 1034.
 
 =back
 
