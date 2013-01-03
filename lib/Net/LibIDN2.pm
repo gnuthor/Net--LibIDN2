@@ -8,15 +8,16 @@ use warnings;
 
 require Exporter;
 require DynaLoader;
-use AutoLoader;
 
 our @ISA = qw(Exporter DynaLoader);
 
 our %EXPORT_TAGS = ( 'all' => [ qw(
 	idn2_strerror
 	idn2_strerror_name
-	idn2_lookup
-	idn2_register
+	idn2_lookup_u8
+	idn2_lookup_ul
+	idn2_register_u8
+	idn2_register_ul
 	IDN2_NFC_INPUT
 	IDN2_ALABEL_ROUNDTRIP
 ) ] );
@@ -27,7 +28,7 @@ our @EXPORT = qw(
 	IDN2_NFC_INPUT
 	IDN2_ALABEL_ROUNDTRIP
 );
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 bootstrap Net::LibIDN2 $VERSION;
 
@@ -57,7 +58,7 @@ domain names according to IDNA 2008 (RFC 5890, RFC 5891, RFC 5892, RFC 5893)
 
 =over 4
 
-=item B<Net::LibIDN2::idn2_lookup>(I<$src>, [I<$flags>, [I<$rc>]]);
+=item B<Net::LibIDN2::idn2_lookup_u8>(I<$src>, [I<$flags>, [I<$rc>]]);
 
 Perform IDNA2008 lookup string conversion on domain name I<$src> (encoded in UTF-8),
 as described in section 5 of RFC 5891. Note that I<$src> must be in Unicode NFC form.
@@ -71,7 +72,7 @@ B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
 On error, returns undef. If a scalar variable is provided in I<$rc>, 
 returns the internal libidn2 C library result code as well.
 
-=item B<Net::LibIDN2::idn2_register>(I<$ulabel>, [I<$alabel>, [I<$flags>, [I<$rc>]]]);
+=item B<Net::LibIDN2::idn2_register_u8>(I<$ulabel>, [I<$alabel>, [I<$flags>, [I<$rc>]]]);
 
 Perform IDNA2008 register string conversion on domain label I<$ulabel> and I<$alabel>,
 as described in section 4 of RFC 5891. Note that the input ulabel must be encoded 

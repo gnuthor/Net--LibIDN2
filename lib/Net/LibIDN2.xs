@@ -35,7 +35,7 @@ idn2_strerror_name(rc)
 		RETVAL
 
 char *
-idn2_lookup(src, flags = 0, result = NO_INIT)
+idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
 		int result
@@ -62,13 +62,47 @@ idn2_lookup(src, flags = 0, result = NO_INIT)
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
-			
+
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(lookupname);
-		
+
 char *
-idn2_register(ulabel, alabel=NULL, flags=0, result=0)
+idn2_lookup_ul(src, flags = 0, result = NO_INIT)
+		char * src
+		int flags
+		int result
+	PROTOTYPE: $;$$
+	PREINIT:
+		char * lookupname = NULL;
+		int res;
+	CODE:
+		if (items>1 && ST(1) == &PL_sv_undef)
+			flags = 0;
+
+		res = idn2_lookup_ul(
+			src,
+			&lookupname,
+			flags);
+
+		if (res == IDN2_OK)
+			ST(0) = newSVpv(lookupname, strlen(lookupname));
+		else
+			ST(0) =  &PL_sv_undef;
+
+		if (items>2 && ST(2) != &PL_sv_undef)
+		{
+			sv_setiv(ST(2), (IV)res);
+			SvSETMAGIC(ST(2));
+		}
+
+	CLEANUP:
+		if (res == IDN2_OK)
+			idn2_free(lookupname);
+
+
+char *
+idn2_register_u8(ulabel, alabel=NULL, flags=0, result=0)
 		char * ulabel
 		char * alabel
 		int flags
@@ -94,7 +128,44 @@ idn2_register(ulabel, alabel=NULL, flags=0, result=0)
 			ST(0) = newSVpv((const char*)insertname, strlen((const char*)insertname));
 		else
 			ST(0) =  &PL_sv_undef;
-		
+
+		if (items>3 && ST(3) != &PL_sv_undef)
+		{
+			sv_setiv(ST(3), (IV)res);
+			SvSETMAGIC(ST(3));
+		}
+	CLEANUP:
+		if (res == IDN2_OK)
+			idn2_free(insertname);
+
+char *
+idn2_register_ul(ulabel, alabel=NULL, flags=0, result=0)
+		char * ulabel
+		char * alabel
+		int flags
+		int result
+	PROTOTYPE: $;$$$
+	PREINIT:
+		char * insertname = NULL;
+		int res;
+	CODE:
+		if (items>1 && ST(1) == &PL_sv_undef)
+			alabel = NULL;
+
+		if (items>2 && ST(2) == &PL_sv_undef)
+			flags = 0;
+
+		res = idn2_register_ul(
+			ulabel,
+			alabel,
+			&insertname,
+			flags);
+
+		if (res == IDN2_OK)
+			ST(0) = newSVpv(insertname, strlen(insertname));
+		else
+			ST(0) =  &PL_sv_undef;
+
 		if (items>3 && ST(3) != &PL_sv_undef)
 		{
 			sv_setiv(ST(3), (IV)res);
