@@ -14,6 +14,7 @@ our @ISA = qw(Exporter DynaLoader);
 our %EXPORT_TAGS = ( 'all' => [ qw(
 	idn2_strerror
 	idn2_strerror_name
+	idn2_check_version
 	idn2_lookup_u8
 	idn2_lookup_ul
 	idn2_register_u8
@@ -105,6 +106,20 @@ Convert internal libidn2 error code I<$rc> to a humanly readable string.
 Convert internal libidn2 error code I<$rc> to a string corresponding to
 internal header file symbols names like IDN2_MALLOC.
 
+=item B<Net::LibIDN2::id2n_check_version([I<$req_version>])
+
+Checks that the version of the underlying IDN2 C library is at minimum
+the one given as a string in I<$req_version> and if that is the case
+returns the actual version string  of the underlying C library or undef
+if the condition is not met. If no parameter is passed to this function
+no check is done and only the version  string is returned.
+
+See B<IDN2_VERSION> for a suitable I<$req_version> string, it corresponds
+to  the idn2.h C header file version at compile time of this Perl module.
+Normally these two version numbers match, but if you compiled this Perl
+module against an older libidn2  and then run it with a newer libidn2
+shared library they will be different.
+
 =back
 
 =head2 Constants
@@ -113,17 +128,17 @@ internal header file symbols names like IDN2_MALLOC.
 
 =item B<IDN2_VERSION>
 
-Pre-processor symbol with a string that describe the header file version
-number. Used together with idn2_check_version() to verify header file
-and run-time library consistency.
+Pre-processor symbol with a string that describe the C header file version
+number at compile time of this Perl module. Used together with idn2_check_version()
+to verify header file and run-time library consistency.
 
 =item B<IDN2_VERSION_NUMBER>
 
-Pre-processor symbol with a hexadecimal value describing the header file
-version number. For example, when the header version is 1.2.4711 this
-symbol will have the value 0x01021267. The last four digits are used to
-enumerate development snapshots, but for all public releases they will
-be 0000.
+Pre-processor symbol with a hexadecimal value describing the C header file
+version number at compile time of this Perl module. For example, when the header 
+version is 1.2.4711 this symbol will have the value 0x01021267. The last four
+digits are used to enumerate development snapshots, but for all public releases
+they will be 0000.
 
 =item B<IDN2_LABEL_MAX_LENGTH>
 

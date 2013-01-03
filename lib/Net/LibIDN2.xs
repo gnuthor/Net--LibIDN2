@@ -38,6 +38,16 @@ idn2_strerror_name(rc)
 	OUTPUT:
 		RETVAL
 
+
+const char *
+idn2_check_version(req_version = NULL)
+		const char * req_version
+	PROTOTYPE: ;$
+	CODE:
+		RETVAL = idn2_check_version(req_version);
+	OUTPUT:
+		RETVAL
+
 char *
 idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 		char * src

@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 29;
+use Test::More tests => 31;
 
 BEGIN { use_ok( 'Net::LibIDN2'); }
 
@@ -17,6 +17,9 @@ is(IDN2_ALABEL_ROUNDTRIP, 2);
 
 is(Net::LibIDN2::idn2_strerror(0), 'success');
 is(Net::LibIDN2::idn2_strerror_name(0), 'IDN2_OK');
+
+ok(Net::LibIDN2::idn2_check_version(IDN2_VERSION));
+ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 
 {
 	my $result = Net::LibIDN2::idn2_lookup_u8("müßli.de");
