@@ -14,6 +14,8 @@ my $build = Module::Build->new
 
 	dist_author => 'Thomas Jacob <jacob@internet24.de>',
 
+	release_status => 'unstable',
+
     dynamic_config       => 1,
 
 	extra_compiler_flags => '',
@@ -25,10 +27,19 @@ my $build = Module::Build->new
 		'ExtUtils::ParseXS' => 0,
 		'Test::More' => '0.10',
 	},
-	
+
 	requires =>
 	{
 		'perl' => '5.6.1',
+	},
+
+	meta_merge =>
+	{
+		resources => {
+			repository  => 'https://github.com/gnuthor/Net--LibIDN2',
+			homepage    => 'https://metacpan.org/release/Net-LibIDN2',
+			bugtracker  => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Net-LibIDN2',
+		},
 	},
 );
 												    
