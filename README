@@ -1,3 +1,12 @@
+Please note that as of Jan 5th 2013, GNU libidn2 isn't actually 
+fully functional yet, so consider this a development
+release with an unstable API.
+
+Developed against pre-release git tree of libidn2 (internal
+version 0.9)
+
+Installation
+~~~~~~~~~~~~
 
 perl Build.PL
 ./Build
