@@ -14,8 +14,6 @@ my $build = Module::Build->new
 
 	dist_author => 'Thomas Jacob <jacob@internet24.de>',
 
-	release_status => 'unstable',
-
     dynamic_config       => 1,
 
 	extra_compiler_flags => '',
