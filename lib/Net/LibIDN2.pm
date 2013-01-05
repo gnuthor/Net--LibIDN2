@@ -54,9 +54,9 @@ Net::LibIDN2 - Perl bindings for GNU Libidn2
 
   use Net::LibIDN2 ':all';
 
-  idn2_lookup("müßli.de") eq 'xn--mli-5ka8l.de';
+  idn2_lookup_u8("müßli.de") eq 'xn--mli-5ka8l.de';
   
-  idn2_register("müßli", "xn--mli-5ka8l") eq 'xn--mli-5ka8l.de';
+  idn2_register_u8("müßli", "xn--mli-5ka8l") eq 'xn--mli-5ka8l.de';
 
 =head1 DESCRIPTION
 
@@ -67,21 +67,27 @@ domain names according to IDNA 2008 (RFC 5890, RFC 5891, RFC 5892, RFC 5893)
 
 =over 4
 
-=item B<Net::LibIDN2::idn2_lookup_u8>(I<$src>, [I<$flags>, [I<$rc>]]);
+=item B<Net::LibIDN2::idn2_lookup_u8>(I<$src> [, I<$flags> [, I<$rc>]]);
 
-Perform IDNA2008 lookup string conversion on domain name I<$src> (encoded in UTF-8),
-as described in section 5 of RFC 5891. Note that I<$src> must be in Unicode NFC form.
+Perform IDNA2008 lookup string conversion on domain name $I<src>, as described in 
+section 5 of RFC 5891. Note that the input string must be encoded in UTF-8 and
+be in Unicode NFC form.
 
 Pass B<IDN2_NFC_INPUT> in I<$flags> to convert input to NFC form before further
-processing. Pass B<IDN2_ALABEL_ROUNDTRIP> in I<$flags> to convert any input
-A-labels to U-labels and perform additional testing. Multiple flags may
-be specified by binary or:ing them together, for example
-B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
+processing. Pass B<IDN2_ALABEL_ROUNDTRIP> in flags to convert any input A-labels
+to U-labels and perform additional testing. Multiple flags may be specified
+by binary or:ing them together, for example B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
 
 On error, returns undef. If a scalar variable is provided in I<$rc>, 
 returns the internal libidn2 C library result code as well.
 
-=item B<Net::LibIDN2::idn2_register_u8>(I<$ulabel>, [I<$alabel>, [I<$flags>, [I<$rc>]]]);
+=item B<Net::LibIDN2::idn2_lookup_ul>(I<$src> [, I<$flags> [, I<$rc>]]);
+
+Similar to function C<idn2_lookup_u8> but I<$src> is assumed to be encoded in 
+the locale's default coding system, and will be transcoded to UTF-8 and NFC 
+normalized before returning the result.
+
+=item B<Net::LibIDN2::idn2_register_u8>(I<$ulabel> [, I<$alabel>, [I<$flags>, [I<$rc>]]]);
 
 Perform IDNA2008 register string conversion on domain label I<$ulabel> and I<$alabel>,
 as described in section 4 of RFC 5891. Note that the input ulabel must be encoded 
@@ -97,6 +103,12 @@ only I<$ulabel>. See RFC 5891 section 4 for more information.
 On error, returns undef. If a scalar variable is provided in I<$rc>, 
 returns the internal libidn2 C library result code as well.
 
+=item B<Net::LibIDN2::idn2_register_u8>(I<$ulabel> [, I<$alabel>, [I<$flags>, [I<$rc>]]]);
+
+Similar to function C<idn2_register_ul> but I<$ulabel> is assumed to be encoded in 
+the locale's default coding system, and will be transcoded to UTF-8 and NFC 
+normalized before returning the result.
+
 =item B<Net::LibIDN2::idn2_strerror>(I<$rc>);
 
 Convert internal libidn2 error code I<$rc> to a humanly readable string.
@@ -106,7 +118,7 @@ Convert internal libidn2 error code I<$rc> to a humanly readable string.
 Convert internal libidn2 error code I<$rc> to a string corresponding to
 internal header file symbols names like IDN2_MALLOC.
 
-=item B<Net::LibIDN2::id2n_check_version([I<$req_version>])
+=item B<Net::LibIDN2::id2n_check_version>([I<$req_version>])
 
 Checks that the version of the underlying IDN2 C library is at minimum
 the one given as a string in I<$req_version> and if that is the case
@@ -147,8 +159,10 @@ as specified in RFC 1034.
 
 =item B<IDN2_DOMAIN_MAX_LENGTH>
 
-Constant specifying the maximum length of a DNS domain to 255 characters,
-as specified in RFC 1034.
+Constant specifying the maximum size of the wire encoding of a DNS domain to 255
+characters, as specified in RFC 1034. Note that the usual printed representation
+of a domain name is limited to 253 characters if it does not end with a period
+or 254 characters if it ends with a period. 
 
 =back
 
@@ -229,10 +243,6 @@ String has forbidden unassigned character.
 String has forbidden bi-directional properties.
 
 =back
-
-=head2 Limitations
-
-Not sure if it works with Perl builtin unicode support.
 
 =head1 AUTHOR
 
