@@ -37,7 +37,7 @@ our @EXPORT = qw(
 	IDN2_NFC_INPUT
 	IDN2_ALABEL_ROUNDTRIP
 );
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 bootstrap Net::LibIDN2 $VERSION;
 

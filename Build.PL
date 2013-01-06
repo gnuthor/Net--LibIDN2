@@ -14,7 +14,9 @@ my $build = Module::Build->new
 
 	dist_author => 'Thomas Jacob <jacob@internet24.de>',
 
-    dynamic_config       => 1,
+	dynamic_config => 1,
+
+	create_license => 1,
 
 	extra_compiler_flags => '',
 	extra_linker_flags   => '-lidn2',

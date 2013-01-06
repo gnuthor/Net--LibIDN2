@@ -1,12 +1,18 @@
-Please note that as of Jan 5th 2013, GNU libidn2 isn't actually 
-fully functional yet, so consider this a development
-release with an unstable API.
+Net/LibIDN2 version 0.03
+========================
+
+This module provides Perl bindings for GNU Libidn2 by Simon Josefsson
+(http://www.gnu.org/software/libidn/) and closely follows
+the original C API of that library.
+
+Please note that as of Jan 5th 2013, libidn2 doesn't appear to be fully 
+functional yet (see IDN2_ALABEL_ROUNDTRIP regression test), so please
+consider this a development release with a potentially unstable API.
 
 Developed against pre-release git tree of libidn2 (internal
-version 0.9)
+version 0.9).
 
-Installation
-~~~~~~~~~~~~
+INSTALLATION
 
 perl Build.PL
 ./Build
@@ -24,3 +30,8 @@ the module like follows:
 
 perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2 -Wl,-rpath=/path/lib"
 
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  GNU Libidn2 >=0.8
