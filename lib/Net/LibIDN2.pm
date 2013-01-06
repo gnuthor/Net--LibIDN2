@@ -56,12 +56,12 @@ Net::LibIDN2 - Perl bindings for GNU Libidn2
 
   idn2_lookup_u8("müßli.de") eq 'xn--mli-5ka8l.de';
   
-  idn2_register_u8("müßli", "xn--mli-5ka8l") eq 'xn--mli-5ka8l.de';
+  idn2_register_u8("müßli", "xn--mli-5ka8l") eq 'xn--mli-5ka8l';
 
 =head1 DESCRIPTION
 
 Provides bindings for GNU Libidn2, a C library for handling internationalized
-domain names according to IDNA 2008 (RFC 5890, RFC 5891, RFC 5892, RFC 5893)
+domain names according to IDNA 2008 (RFC 5890, RFC 5891, RFC 5892, RFC 5893).
 
 =head2 Functions
 
