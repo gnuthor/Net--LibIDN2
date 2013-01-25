@@ -12,6 +12,9 @@ consider this a development release with a potentially unstable API.
 Developed against pre-release git tree of libidn2 (internal
 version 0.9).
 
+Devel-CheckLib-0.98 in directory inc, by Yasuhiro Matsumoto, is
+included as is to facilitate cpantesters.org build testing.
+
 INSTALLATION
 
 perl Build.PL
@@ -28,7 +31,14 @@ Should your runtime library search path not contain libidn2, you probably will
 have to set LD_LIBRARY_PATH or compile the absolute library path into
 the module like follows:
 
-perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2 -Wl,-rpath=/path/lib"
+LD_LIBRARY_PATH=/path/lib perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2"
+
+or
+
+LD_LIBRARY_PATH=/path/lib perl Build.PL --extra_compiler_flags=-I/path/include --extra_linker_flags="-L/path/lib -lidn2 -Wl,-rpath=/path/lib"
+
+Setting LD_LIBRARY_PATH *and* rpath might be necessary to make Devel::CheckLib detect the
+presence of libidn2 correctly.
 
 DEPENDENCIES
 

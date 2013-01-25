@@ -1,7 +1,8 @@
-0.03 
-    * doc changes
+0.03 2013-01-25
+	* doc changes
+	* include Devel::CheckLib to check for GNU LibIDN dependency
 0.02 2013-01-05
-    * support for u8/ul versions
+	* support for u8/ul versions
 	* support for check_version
 	* doc changes
 	* CPAN release prep

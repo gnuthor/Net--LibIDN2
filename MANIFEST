@@ -8,3 +8,4 @@ t/001_basic.t
 LICENSE
 META.yml
 META.json
+inc/Devel/CheckLib.pm
