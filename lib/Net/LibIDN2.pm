@@ -70,12 +70,12 @@ Net::LibIDN2 - Perl bindings for GNU Libidn2
 
   idn2_lookup_u8(Encode::encode_utf8("m\N{U+00FC}\N{U+00DF}li.de"))
     eq 'xn--mli-5ka8l.de';
-  
+
   idn2_register_u8(
     Encode::encode_utf8("m\N{U+00FC}\N{U+00DF}li"),
     "xn--mli-5ka8l"
   ) eq 'xn--mli-5ka8l';
-  
+
   Encode::decode_utf8(idn2_to_unicode_88("xn--mli-5ka8l.de"))
     eq "m\N{U+00FC}\N{U+00DF}li"
 

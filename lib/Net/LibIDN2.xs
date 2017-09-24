@@ -55,7 +55,7 @@ idn2_check_version(req_version = NULL)
 	OUTPUT:
 		RETVAL
 
-char *
+SV *
 idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
@@ -66,6 +66,7 @@ idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 	PREINIT:
 		uint8_t * lookupname = NULL;
 		int res;
+		PERL_UNUSED_VAR(ix);
 	CODE:
 		if (items>1 && ST(1) == &PL_sv_undef)
 			flags = 0;
@@ -76,21 +77,22 @@ idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv((const char*)lookupname, strlen((const char*)lookupname));
+			RETVAL = newSVpv((const char*)lookupname, strlen((const char*)lookupname));
 		else
-			ST(0) =  &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>2 && ST(2) != &PL_sv_undef)
 		{
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
-
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(lookupname);
 
-char *
+SV *
 idn2_lookup_ul(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
@@ -101,6 +103,7 @@ idn2_lookup_ul(src, flags = 0, result = NO_INIT)
 	PREINIT:
 		char * lookupname = NULL;
 		int res;
+		PERL_UNUSED_VAR(ix);
 	CODE:
 		if (items>1 && ST(1) == &PL_sv_undef)
 			flags = 0;
@@ -111,23 +114,24 @@ idn2_lookup_ul(src, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv(lookupname, strlen(lookupname));
+			RETVAL = newSVpv(lookupname, strlen(lookupname));
 		else
-			ST(0) =  &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>2 && ST(2) != &PL_sv_undef)
 		{
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
-
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(lookupname);
 
 
-char *
-idn2_register_u8(ulabel, alabel=NULL, flags=0, result=0)
+SV *
+idn2_register_u8(ulabel, alabel = NULL, flags = 0, result = NO_INIT)
 		char * ulabel
 		char * alabel
 		int flags
@@ -150,21 +154,23 @@ idn2_register_u8(ulabel, alabel=NULL, flags=0, result=0)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv((const char*)insertname, strlen((const char*)insertname));
+			RETVAL = newSVpv((const char*)insertname, strlen((const char*)insertname));
 		else
-			ST(0) =  &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>3 && ST(3) != &PL_sv_undef)
 		{
 			sv_setiv(ST(3), (IV)res);
 			SvSETMAGIC(ST(3));
 		}
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(insertname);
 
-char *
-idn2_register_ul(ulabel, alabel=NULL, flags=0, result=0)
+SV *
+idn2_register_ul(ulabel, alabel = NULL, flags = 0, result = NO_INIT)
 		char * ulabel
 		char * alabel
 		int flags
@@ -187,21 +193,23 @@ idn2_register_ul(ulabel, alabel=NULL, flags=0, result=0)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv(insertname, strlen(insertname));
+			RETVAL = newSVpv(insertname, strlen(insertname));
 		else
-			ST(0) =  &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>3 && ST(3) != &PL_sv_undef)
 		{
 			sv_setiv(ST(3), (IV)res);
 			SvSETMAGIC(ST(3));
 		}
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(insertname);
 
 
-char *
+SV *
 idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
 		char * input
 		int flags
@@ -212,6 +220,7 @@ idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
 	PREINIT:
 		char * output = NULL;
 		int res;
+		PERL_UNUSED_VAR(ix);
 	CODE:
 		if (items>1 && ST(1) == &PL_sv_undef)
 			flags = 0;
@@ -222,20 +231,22 @@ idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv(output, strlen(output));
+			RETVAL = newSVpv(output, strlen(output));
 		else
-			ST(0) = &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>2 && ST(2) != &PL_sv_undef)
 		{
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(output);
 
-char *
+SV *
 idn2_to_unicode_8l(input, flags = 0, result = NO_INIT)
 		char * input
 		int flags
@@ -254,20 +265,22 @@ idn2_to_unicode_8l(input, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv(output, strlen(output));
+			RETVAL = newSVpv(output, strlen(output));
 		else
-			ST(0) = &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>2 && ST(2) != &PL_sv_undef)
 		{
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(output);
 
-char *
+SV *
 idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
 		char * input
 		int flags
@@ -278,6 +291,7 @@ idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
 	PREINIT:
 		char * output = NULL;
 		int res;
+		PERL_UNUSED_VAR(ix);
 	CODE:
 		if (items>1 && ST(1) == &PL_sv_undef)
 			flags = 0;
@@ -288,15 +302,17 @@ idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-			ST(0) = newSVpv(output, strlen(output));
+			RETVAL = newSVpv(output, strlen(output));
 		else
-			ST(0) = &PL_sv_undef;
+			RETVAL = &PL_sv_undef;
 
 		if (items>2 && ST(2) != &PL_sv_undef)
 		{
 			sv_setiv(ST(2), (IV)res);
 			SvSETMAGIC(ST(2));
 		}
+	OUTPUT:
+		RETVAL
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(output);
