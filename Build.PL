@@ -17,7 +17,7 @@ foreach (@ARGV)
 check_lib_or_exit(
 	lib => 'idn2', 
 	header => 'idn2.h',
-	function => 'if (idn2_check_version("0.8")) return 0; else return 1;',
+	function => 'if (idn2_check_version("2.0.0")) return 0; else return 1;',
 	incpath => $incpath,
 	libpath => $libpath
 );
@@ -30,7 +30,7 @@ my $build = Module::Build->new
 
 	license  => 'perl',
 
-	dist_author => 'Thomas Jacob <jacob@internet24.de>',
+	dist_author => 'Thomas Jacob <gnuthor@gmail.com>',
 
 	dynamic_config => 1,
 

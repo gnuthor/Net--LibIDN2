@@ -51,7 +51,7 @@ our @EXPORT = qw(
 	IDN2_ALLOW_UNASSIGNED
 	IDN2_USE_STD3_ASCII_RULES
 );
-our $VERSION = '0.03';
+our $VERSION = '1.00';
 
 bootstrap Net::LibIDN2 $VERSION;
 
@@ -318,7 +318,7 @@ Label has character forbidden in non-transitional mode (TR46).
 
 =head1 AUTHOR
 
-Thomas Jacob, http://internet24.de
+Thomas Jacob, https://github.com/gnuthor
 
 =head1 SEE ALSO
 
