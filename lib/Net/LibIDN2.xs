@@ -60,6 +60,8 @@ idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
 		int result
+    ALIAS:
+        idn2_to_ascii_8 = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		uint8_t * lookupname = NULL;
@@ -93,6 +95,8 @@ idn2_lookup_ul(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
 		int result
+    ALIAS:
+        idn2_to_ascii_l = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		char * lookupname = NULL;

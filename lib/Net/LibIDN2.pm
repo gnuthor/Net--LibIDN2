@@ -83,6 +83,8 @@ domain names according to IDNA 2008 (RFC 5890, RFC 5891, RFC 5892, RFC 5893).
 
 =item B<Net::LibIDN2::idn2_lookup_u8>(I<$src> [, I<$flags> [, I<$rc>]]);
 
+Alternative name idn2_to_ascii_8.
+
 Perform IDNA2008 lookup string conversion on domain name $I<src>, as described in 
 section 5 of RFC 5891. Note that the input string must be encoded in UTF-8 and
 be in Unicode NFC form.
@@ -96,6 +98,8 @@ On error, returns undef. If a scalar variable is provided in I<$rc>,
 returns the internal libidn2 C library result code as well.
 
 =item B<Net::LibIDN2::idn2_lookup_ul>(I<$src> [, I<$flags> [, I<$rc>]]);
+
+Alternative name idn2_to_ascii_l.
 
 Similar to function C<idn2_lookup_u8> but I<$src> is assumed to be encoded in 
 the locale's default coding system, and will be transcoded to UTF-8 and NFC 

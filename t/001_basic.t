@@ -43,14 +43,23 @@ is(Net::LibIDN2::idn2_strerror_name(0), 'IDN2_OK');
 ok(Net::LibIDN2::idn2_check_version(IDN2_VERSION));
 ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 
+
 {
 	my $result = Net::LibIDN2::idn2_lookup_u8("m\N{U+00FC}\N{U+00DF}li.de");
+
+	is($result, "xn--mli-5ka8l.de");
+
+	$result = Net::LibIDN2::idn2_to_ascii_8("m\N{U+00FC}\N{U+00DF}li.de");
 
 	is($result, "xn--mli-5ka8l.de");
 
 	if ($local_charset)
 	{
 		my $result = Net::LibIDN2::idn2_lookup_ul(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+
+		is($result, "xn--mli-5ka8l.de");
+
+		$result = Net::LibIDN2::idn2_to_ascii_l(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
 
 		is($result, "xn--mli-5ka8l.de");
 	}
