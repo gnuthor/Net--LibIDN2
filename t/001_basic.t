@@ -103,7 +103,7 @@ my $muesli_dot_de_punycode = "xn--mli-5ka8l.de";
 }
 
 {
-	local $TODO = "IDN2_ALABEL_ROUNDTRIP not implemented in 0.9 yet";
+	local $TODO = "IDN2_ALABEL_ROUNDTRIP not implemented in 2.0.4 yet";
 
 	my $rc = 0;
 	my $result = Net::LibIDN2::idn2_lookup_u8("xn--mli-x5ka8l.de", IDN2_ALABEL_ROUNDTRIP, $rc);
@@ -122,7 +122,7 @@ my $muesli_dot_de_punycode = "xn--mli-5ka8l.de";
 }
 
 {
-	local $TODO = "IDN2_ALABEL_ROUNDTRIP not implemented in 0.9 yet";
+	local $TODO = "IDN2_ALABEL_ROUNDTRIP not implemented in 2.0.4 yet";
 
 	my $rc = 0;
 	my $result = Net::LibIDN2::idn2_lookup_u8($muesli_punycode, IDN2_ALABEL_ROUNDTRIP, $rc);
