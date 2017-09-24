@@ -44,24 +44,31 @@ ok(Net::LibIDN2::idn2_check_version(IDN2_VERSION));
 ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 
 
+my $muesli_unicode = "m\N{U+00FC}\N{U+00DF}li";
+my $muesli_utf8 = Encode::encode_utf8($muesli_unicode);
+my $muesli_punycode = "xn--mli-5ka8l";
+my $muesli_dot_de_unicode = "m\N{U+00FC}\N{U+00DF}li.de";
+my $muesli_dot_de_utf8 = Encode::encode_utf8($muesli_dot_de_unicode);
+my $muesli_dot_de_punycode = "xn--mli-5ka8l.de";
+
 {
-	my $result = Net::LibIDN2::idn2_lookup_u8("m\N{U+00FC}\N{U+00DF}li.de");
+	my $result = Net::LibIDN2::idn2_lookup_u8($muesli_dot_de_utf8);
 
-	is($result, "xn--mli-5ka8l.de");
+	is($result, $muesli_dot_de_punycode);
 
-	$result = Net::LibIDN2::idn2_to_ascii_8("m\N{U+00FC}\N{U+00DF}li.de");
+	$result = Net::LibIDN2::idn2_to_ascii_8($muesli_dot_de_utf8);
 
-	is($result, "xn--mli-5ka8l.de");
+	is($result, $muesli_dot_de_punycode);
 
 	if ($local_charset)
 	{
-		my $result = Net::LibIDN2::idn2_lookup_ul(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+		my $result = Net::LibIDN2::idn2_lookup_ul(encode($local_charset, $muesli_dot_de_unicode));
 
-		is($result, "xn--mli-5ka8l.de");
+		is($result, $muesli_dot_de_punycode);
 
-		$result = Net::LibIDN2::idn2_to_ascii_l(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+		$result = Net::LibIDN2::idn2_to_ascii_l(encode($local_charset, $muesli_dot_de_unicode));
 
-		is($result, "xn--mli-5ka8l.de");
+		is($result, $muesli_dot_de_punycode);
 	}
 }
 
@@ -118,76 +125,76 @@ ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 	local $TODO = "IDN2_ALABEL_ROUNDTRIP not implemented in 0.9 yet";
 
 	my $rc = 0;
-	my $result = Net::LibIDN2::idn2_lookup_u8("xn--mli-5ka8l", IDN2_ALABEL_ROUNDTRIP, $rc);
+	my $result = Net::LibIDN2::idn2_lookup_u8($muesli_punycode, IDN2_ALABEL_ROUNDTRIP, $rc);
 
 	is(Net::LibIDN2::idn2_strerror_name($rc), "IDN2_OK");
-	is($result, "xn--mli-5ka8l");
+	is($result, $muesli_punycode);
 
 	if ($local_charset)
 	{
 		my $rc = 0;
-		my $result = Net::LibIDN2::idn2_lookup_u8("xn--mli-5ka8l", IDN2_ALABEL_ROUNDTRIP, $rc);
+		my $result = Net::LibIDN2::idn2_lookup_u8($muesli_punycode, IDN2_ALABEL_ROUNDTRIP, $rc);
 
 		is(Net::LibIDN2::idn2_strerror_name($rc), "IDN2_OK");
-		is($result, "xn--mli-5ka8l");
+		is($result, $muesli_punycode);
 	}
 }
 
 {
-	my $result = Net::LibIDN2::idn2_register_u8("m\N{U+00FC}\N{U+00DF}li");
+	my $result = Net::LibIDN2::idn2_register_u8($muesli_utf8);
 
-	is($result, "xn--mli-5ka8l");
+	is($result, $muesli_punycode);
 
 	if ($local_charset)
 	{
-		my $result = Net::LibIDN2::idn2_register_ul(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li"));
+		my $result = Net::LibIDN2::idn2_register_ul(encode($local_charset, $muesli_unicode));
 
-		is($result, "xn--mli-5ka8l");
+		is($result, $muesli_punycode);
 	}
 }
 
 {
-	my $result = Net::LibIDN2::idn2_register_u8("m\N{U+00FC}\N{U+00DF}li", undef);
+	my $result = Net::LibIDN2::idn2_register_u8($muesli_utf8, undef);
 
-	is($result, "xn--mli-5ka8l");
+	is($result, $muesli_punycode);
 
 	if ($local_charset)
 	{
-		my $result = Net::LibIDN2::idn2_register_ul(encode($local_charset, "m\N{U+00FC}\N{U+00DF}li"), undef);
+		my $result = Net::LibIDN2::idn2_register_ul(encode($local_charset, $muesli_unicode), undef);
 
-		is($result, "xn--mli-5ka8l");
+		is($result, $muesli_punycode);
 	}
 }
 
 {
-	my $result = Net::LibIDN2::idn2_register_u8("m\N{U+00FC}\N{U+00DF}li", undef, undef);
+	my $result = Net::LibIDN2::idn2_register_u8($muesli_utf8, undef, undef);
 
-	is($result, "xn--mli-5ka8l");
+	is($result, $muesli_punycode);
 
 	if ($local_charset)
 	{
 		my $result = Net::LibIDN2::idn2_register_ul(
-			encode($local_charset, "m\N{U+00FC}\N{U+00DF}li"), undef, undef);
+			encode($local_charset, $muesli_unicode), undef, undef);
 
-		is($result, "xn--mli-5ka8l");
+		is($result, $muesli_punycode);
 	}
 }
 
 {
 	my $rc = 0;
-	my $result = Net::LibIDN2::idn2_register_u8("m\N{U+00FC}\N{U+00DF}li", undef, undef, $rc);
+	my $result = Net::LibIDN2::idn2_register_u8($muesli_utf8, undef, undef, $rc);
 
 	is(Net::LibIDN2::idn2_strerror_name($rc), "IDN2_OK");
-	is($result, "xn--mli-5ka8l");
+	is($result, $muesli_punycode);
 
 	if ($local_charset)
 	{
 		my $rc = 0;
 		my $result = Net::LibIDN2::idn2_register_ul(
-			encode($local_charset, "m\N{U+00FC}\N{U+00DF}li"), undef, undef, $rc);
+			encode($local_charset, $muesli_unicode), undef, undef, $rc);
 
 		is(Net::LibIDN2::idn2_strerror_name($rc), "IDN2_OK");
-		is($result, "xn--mli-5ka8l");
+		is($result, $muesli_punycode);
 	}
 }
 
@@ -212,31 +219,31 @@ ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 }
 
 {
-	my $result = Net::LibIDN2::idn2_to_unicode_88("xn--mli-5ka8l.de");
+	my $result = Net::LibIDN2::idn2_to_unicode_88($muesli_dot_de_punycode);
         
-	is($result, "m\N{U+00FC}\N{U+00DF}li.de");
+	is($result, $muesli_dot_de_utf8);
 
-    $result =  Net::LibIDN2::idn2_to_unicode_88($result);
+    $result = Net::LibIDN2::idn2_to_unicode_88($result);
 
-	is($result, "m\N{U+00FC}\N{U+00DF}li.de");
+	is($result, $muesli_dot_de_utf8);
 
 	if ($local_charset)
 	{
-		my $result = Net::LibIDN2::idn2_to_unicode_8l("xn--mli-5ka8l.de");
+		my $result = Net::LibIDN2::idn2_to_unicode_8l($muesli_dot_de_punycode);
             
-		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+		is($result, encode($local_charset, $muesli_dot_de_unicode));
         
-        $result = Net::LibIDN2::idn2_to_unicode_8l("m\N{U+00FC}\N{U+00DF}li.de");
+        $result = Net::LibIDN2::idn2_to_unicode_8l($muesli_dot_de_utf8);
 
-		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+		is($result, encode($local_charset, $muesli_dot_de_unicode));
 
-		$result = Net::LibIDN2::idn2_to_unicode_ll("xn--mli-5ka8l.de");
+		$result = Net::LibIDN2::idn2_to_unicode_ll($muesli_dot_de_punycode);
             
-		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+		is(decode($local_charset, $result), $muesli_dot_de_unicode);
         
         $result = Net::LibIDN2::idn2_to_unicode_ll($result);
 		
-        is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+        is($result, encode($local_charset, $muesli_dot_de_unicode));
 	}
 }
 

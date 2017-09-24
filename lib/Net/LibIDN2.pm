@@ -68,11 +68,16 @@ Net::LibIDN2 - Perl bindings for GNU Libidn2
 
   use Net::LibIDN2 ':all';
 
-  idn2_lookup_u8("müßli.de") eq 'xn--mli-5ka8l.de';
+  idn2_lookup_u8(Encode::encode_utf8("m\N{U+00FC}\N{U+00DF}li.de"))
+    eq 'xn--mli-5ka8l.de';
   
-  idn2_register_u8("müßli", "xn--mli-5ka8l") eq 'xn--mli-5ka8l';
+  idn2_register_u8(
+    Encode::encode_utf8("m\N{U+00FC}\N{U+00DF}li"),
+    "xn--mli-5ka8l"
+  ) eq 'xn--mli-5ka8l';
   
-  idn2_to_unicode_88("xn--mli-5ka8l.de") eq 'müßli.de'
+  Encode::decode_utf8(idn2_to_unicode_88("xn--mli-5ka8l.de"))
+    eq "m\N{U+00FC}\N{U+00DF}li"
 
 =head1 DESCRIPTION
 
@@ -94,7 +99,8 @@ be in Unicode NFC form.
 Pass B<IDN2_NFC_INPUT> in I<$flags> to convert input to NFC form before further
 processing. IDN2_TRANSITIONAL and IDN2_NONTRANSITIONAL do already imply IDN2_NFC_INPUT.
 Pass B<IDN2_ALABEL_ROUNDTRIP> in flags to convert any input A-labels
-to U-labels and perform additional testing. Pass IDN2_TRANSITIONAL to enable Unicode
+to U-labels and perform additional testing (not yet implemented).
+Pass IDN2_TRANSITIONAL to enable Unicode
 TR46 transitional processing, and IDN2_NONTRANSITIONAL to enable Unicode TR46
 non-transitional processing.  Multiple flags may be specified
 by binary or:ing them together, for example B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
@@ -141,8 +147,8 @@ normalized before returning the result.
 
 =item B<Net::LibIDN2::idn2_to_unicode_88>(I<$input>, [I<$flags>, [I<$rc>]]);
 
-Converts a possibly ACE encoded domain name in unicode format into a
-unicode string (punycode decoding).
+Converts a possibly ACE encoded domain name in UTF-8 format into a
+an UTF-8 encoded string (punycode decoding).
 
 On error, returns undef. If a scalar variable is provided in I<$rc>, 
 returns the internal libidn2 C library result code as well.

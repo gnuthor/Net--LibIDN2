@@ -60,8 +60,8 @@ idn2_lookup_u8(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
 		int result
-    ALIAS:
-        idn2_to_ascii_8 = 1
+	ALIAS:
+		idn2_to_ascii_8 = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		uint8_t * lookupname = NULL;
@@ -95,8 +95,8 @@ idn2_lookup_ul(src, flags = 0, result = NO_INIT)
 		char * src
 		int flags
 		int result
-    ALIAS:
-        idn2_to_ascii_l = 1
+	ALIAS:
+		idn2_to_ascii_l = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		char * lookupname = NULL;
@@ -206,6 +206,8 @@ idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
 		char * input
 		int flags
 		int result
+	ALIAS:
+		idn2_to_unicode_u8 = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		char * output = NULL;
@@ -220,10 +222,7 @@ idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
 			flags);
 
 		if (res == IDN2_OK)
-        {
 			ST(0) = newSVpv(output, strlen(output));
-            SvUTF8_on(ST(0));
-        }
 		else
 			ST(0) = &PL_sv_undef;
 
@@ -273,6 +272,8 @@ idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
 		char * input
 		int flags
 		int result
+	ALIAS:
+		idn2_to_unicode_ul = 1
 	PROTOTYPE: $;$$
 	PREINIT:
 		char * output = NULL;
@@ -299,6 +300,3 @@ idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(output);
-
-
-
