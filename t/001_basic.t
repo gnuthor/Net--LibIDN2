@@ -211,6 +211,36 @@ ok(!defined(Net::LibIDN2::idn2_check_version("99999999.99999")));
 	is($result, "xn--p39a");
 }
 
+{
+	my $result = Net::LibIDN2::idn2_to_unicode_88("xn--mli-5ka8l.de");
+        
+	is($result, "m\N{U+00FC}\N{U+00DF}li.de");
+
+    $result =  Net::LibIDN2::idn2_to_unicode_88($result);
+
+	is($result, "m\N{U+00FC}\N{U+00DF}li.de");
+
+	if ($local_charset)
+	{
+		my $result = Net::LibIDN2::idn2_to_unicode_8l("xn--mli-5ka8l.de");
+            
+		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+        
+        $result = Net::LibIDN2::idn2_to_unicode_8l("m\N{U+00FC}\N{U+00DF}li.de");
+
+		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+
+		$result = Net::LibIDN2::idn2_to_unicode_ll("xn--mli-5ka8l.de");
+            
+		is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+        
+        $result = Net::LibIDN2::idn2_to_unicode_ll($result);
+		
+        is($result, encode($local_charset, "m\N{U+00FC}\N{U+00DF}li.de"));
+	}
+}
+
+
 done_testing();
 
 1;

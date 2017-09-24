@@ -199,3 +199,106 @@ idn2_register_ul(ulabel, alabel=NULL, flags=0, result=0)
 	CLEANUP:
 		if (res == IDN2_OK)
 			idn2_free(insertname);
+
+
+char *
+idn2_to_unicode_88(input, flags = 0, result = NO_INIT)
+		char * input
+		int flags
+		int result
+	PROTOTYPE: $;$$
+	PREINIT:
+		char * output = NULL;
+		int res;
+	CODE:
+		if (items>1 && ST(1) == &PL_sv_undef)
+			flags = 0;
+
+		res = idn2_to_unicode_8z8z(
+			input,
+			&output,
+			flags);
+
+		if (res == IDN2_OK)
+        {
+			ST(0) = newSVpv(output, strlen(output));
+            SvUTF8_on(ST(0));
+        }
+		else
+			ST(0) = &PL_sv_undef;
+
+		if (items>2 && ST(2) != &PL_sv_undef)
+		{
+			sv_setiv(ST(2), (IV)res);
+			SvSETMAGIC(ST(2));
+		}
+	CLEANUP:
+		if (res == IDN2_OK)
+			idn2_free(output);
+
+char *
+idn2_to_unicode_8l(input, flags = 0, result = NO_INIT)
+		char * input
+		int flags
+		int result
+	PROTOTYPE: $;$$
+	PREINIT:
+		char * output = NULL;
+		int res;
+	CODE:
+		if (items>1 && ST(1) == &PL_sv_undef)
+			flags = 0;
+
+		res = idn2_to_unicode_8zlz(
+			input,
+			&output,
+			flags);
+
+		if (res == IDN2_OK)
+			ST(0) = newSVpv(output, strlen(output));
+		else
+			ST(0) = &PL_sv_undef;
+
+		if (items>2 && ST(2) != &PL_sv_undef)
+		{
+			sv_setiv(ST(2), (IV)res);
+			SvSETMAGIC(ST(2));
+		}
+	CLEANUP:
+		if (res == IDN2_OK)
+			idn2_free(output);
+
+char *
+idn2_to_unicode_ll(input, flags = 0, result = NO_INIT)
+		char * input
+		int flags
+		int result
+	PROTOTYPE: $;$$
+	PREINIT:
+		char * output = NULL;
+		int res;
+	CODE:
+		if (items>1 && ST(1) == &PL_sv_undef)
+			flags = 0;
+
+		res = idn2_to_unicode_lzlz(
+			input,
+			&output,
+			flags);
+
+		if (res == IDN2_OK)
+			ST(0) = newSVpv(output, strlen(output));
+		else
+			ST(0) = &PL_sv_undef;
+
+		if (items>2 && ST(2) != &PL_sv_undef)
+		{
+			sv_setiv(ST(2), (IV)res);
+			SvSETMAGIC(ST(2));
+		}
+	CLEANUP:
+		if (res == IDN2_OK)
+			idn2_free(output);
+
+
+
