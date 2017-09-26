@@ -12,6 +12,7 @@ use Text::ParseWords 'quotewords';
 
 use File::Spec;
 use File::Temp;
+use File::Path;
 
 require Exporter;
 @ISA = qw(Exporter);
@@ -453,6 +454,11 @@ sub _cleanup_exe {
         my $pdbfile = $exefile;
         $pdbfile =~ s/$Config{_exe}$/.pdb/;
 	push @rmfiles, $ilkfile, $pdbfile;
+    }
+    if ( $Config{archname} =~ m/^darwin/ ) {
+	my $dsymdir = $exefile;
+	$dsymdir =~ s/$Config{_exe}$/.dSYM/;
+	File::Path::remove_tree($dsymdir) if $dsymdir && -d $dsymdir;
     }
     foreach (@rmfiles) {
 	if ( -f $_ ) {

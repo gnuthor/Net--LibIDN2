@@ -19,7 +19,8 @@ check_lib_or_exit(
 	header => 'idn2.h',
 	function => 'if (idn2_check_version("2.0.0")) return 0; else return 1;',
 	incpath => $incpath,
-	libpath => $libpath
+	libpath => $libpath,
+	debug => 1,
 );
 
 use Module::Build;
@@ -60,5 +61,5 @@ my $build = Module::Build->new
 		},
 	},
 );
-												    
+
 $build->create_build_script;
