@@ -248,6 +248,28 @@ my $muesli_dot_de_punycode = "xn--mli-5ka8l.de";
 	}
 }
 
+{
+    local $TODO = "IDN2_USE_STD3_ASCII_RULES only implemented in 2.0.4++";
+
+    my $ascii_salad_unicode = "~`!@#\$\%^&*()_+=[]{}\|;:\"\',<>/?.dom\N{U+00E5}ne.com";
+    my $ascii_salad_utf8 = Encode::encode_utf8($ascii_salad_unicode);
+    my $ascii_salad_punycode = "~`!@#\$\%^&*()_+=[]{}\|;:\"\',<>/?.xn--domne-ora.com";
+    my $ascii_salad_punycode_std3 = ".xn--domne-ora.com";
+
+    my $result = Net::LibIDN2::idn2_to_ascii_8($ascii_salad_unicode);
+    is($result, $ascii_salad_punycode);
+
+    $result = Net::LibIDN2::idn2_to_ascii_8($ascii_salad_unicode,
+        IDN2_USE_STD3_ASCII_RULES|IDN2_NONTRANSITIONAL);
+    is($result, $ascii_salad_punycode_std3);
+
+    $result = Net::LibIDN2::idn2_to_ascii_8($ascii_salad_unicode,
+        IDN2_USE_STD3_ASCII_RULES|IDN2_TRANSITIONAL);
+    is($result, $ascii_salad_punycode_std3);
+
+    $result = Net::LibIDN2::idn2_to_unicode_88($ascii_salad_punycode);
+    is($result, $ascii_salad_utf8);
+}
 
 done_testing();
 
