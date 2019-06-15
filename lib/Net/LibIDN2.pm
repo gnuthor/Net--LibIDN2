@@ -11,6 +11,9 @@ require DynaLoader;
 
 our @ISA = qw(Exporter DynaLoader);
 
+our $VERSION = '1.01';
+bootstrap Net::LibIDN2 $VERSION;
+
 our %EXPORT_TAGS = ( 'all' => [ qw(
 	idn2_strerror
 	idn2_strerror_name
@@ -34,6 +37,13 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	IDN2_USE_STD3_ASCII_RULES
 ) ] );
 
+if (idn2_check_version("2.0.5")) {
+	push @{$EXPORT_TAGS{all}}, "IDN2_NO_TR46";
+}
+if (idn2_check_version("2.0.5")) {
+	push @{$EXPORT_TAGS{all}}, "IDN2_NO_ALABEL_ROUNDTRIP";
+}
+
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 our @EXPORT = qw(
@@ -51,9 +61,13 @@ our @EXPORT = qw(
 	IDN2_ALLOW_UNASSIGNED
 	IDN2_USE_STD3_ASCII_RULES
 );
-our $VERSION = '1.00';
 
-bootstrap Net::LibIDN2 $VERSION;
+if (idn2_check_version("2.0.5")) {
+	push @EXPORT, "IDN2_NO_TR46";
+}
+if (idn2_check_version("2.2.0")) {
+	push @EXPORT, "IDN2_NO_ALABEL_ROUNDTRIP";
+}
 
 1;
 __END__
