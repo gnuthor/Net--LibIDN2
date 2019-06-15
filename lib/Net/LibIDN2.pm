@@ -40,7 +40,7 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 if (idn2_check_version("2.0.5")) {
 	push @{$EXPORT_TAGS{all}}, "IDN2_NO_TR46";
 }
-if (idn2_check_version("2.0.5")) {
+if (idn2_check_version("2.2.0")) {
 	push @{$EXPORT_TAGS{all}}, "IDN2_NO_ALABEL_ROUNDTRIP";
 }
 
