@@ -112,12 +112,16 @@ be in Unicode NFC form.
 
 Pass B<IDN2_NFC_INPUT> in I<$flags> to convert input to NFC form before further
 processing. IDN2_TRANSITIONAL and IDN2_NONTRANSITIONAL do already imply IDN2_NFC_INPUT.
+
 Pass B<IDN2_ALABEL_ROUNDTRIP> in flags to convert any input A-labels
-to U-labels and perform additional testing (not yet implemented).
-Pass IDN2_TRANSITIONAL to enable Unicode
-TR46 transitional processing, and IDN2_NONTRANSITIONAL to enable Unicode TR46
-non-transitional processing.  Multiple flags may be specified
-by binary or:ing them together, for example B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
+to U-labels and perform additional testing. This is default if used with a libidn 
+version >= 2.2. To switch this behavior off, pass IDN2_NO_ALABEL_ROUNDTRIP
+
+Pass IDN2_TRANSITIONAL to enable Unicode TR46 transitional processing, and
+IDN2_NONTRANSITIONAL to enable Unicode TR46 non-transitional processing. 
+
+Multiple flags may be specified by binary or:ing them together, for example
+B<IDN2_NFC_INPUT> | B<IDN2_ALABEL_ROUNDTRIP>.
 
 If linked to library GNU Libidn version > 2.0.3: IDN2_USE_STD3_ASCII_RULES disabled by default.
 Previously we were eliminating non-STD3 characters from domain strings such as
