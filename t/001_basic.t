@@ -90,7 +90,7 @@ my $muesli_dot_de_punycode = "xn--mli-5ka8l.de";
 		$rc);
 
 	is(Net::LibIDN2::idn2_strerror_name($rc), "IDN2_NOT_NFC");
-	is($rc, -300);
+	is($rc, Net::LibIDN2::IDN2_NOT_NFC);
 	is($result, undef);
 }
 
