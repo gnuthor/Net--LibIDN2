@@ -22,6 +22,13 @@ our %EXPORT_TAGS = ( 'all' => [ qw(
 	idn2_lookup_ul
 	idn2_register_u8
 	idn2_register_ul
+	idn2_to_ascii_8
+	idn2_to_ascii_l
+	idn2_to_unicode_88
+	idn2_to_unicode_8l
+	idn2_to_unicode_ll
+	idn2_to_unicode_u8
+	idn2_to_unicode_ul
 	IDN2_OK
 	IDN2_MALLOC
 	IDN2_NO_CODESET
