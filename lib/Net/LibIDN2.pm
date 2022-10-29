@@ -11,7 +11,7 @@ require DynaLoader;
 
 our @ISA = qw(Exporter DynaLoader);
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 bootstrap Net::LibIDN2 $VERSION;
 
 our %EXPORT_TAGS = ( 'all' => [ qw(
